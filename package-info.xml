@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
+<package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
+	<id>AirRideTalk:ajax_recent_topics</id>
+	<name>AJAX Recent Topics</name>
+	<version>1.1</version>
+	<type>modification</type>
+
+	<install for="2.0 - 2.99.99">
+		<modification>install20.xml</modification>
+		<database>install.php</database>
+	</install>
+
+	<uninstall for="2.0 - 2.99.99">
+		<modification type="file" reverse="true">install20.xml</modification>
+	</uninstall>
+
+	<install for="1.1.1 - 1.1.99">
+		<modification>install11.xml</modification>
+		<code>install.php</code>
+	</install>
+
+	<uninstall for="1.1.1 - 1.1.99">
+		<modification type="file" reverse="true">install11.xml</modification>
+	</uninstall>
+</package-info>
