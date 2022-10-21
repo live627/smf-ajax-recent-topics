@@ -159,6 +159,20 @@ function recent(){
 
 	while ($row = $smcFunc['db_fetch_assoc']($request))
 	{
+
+		// We need to check the topic icons exist... you can never be too sure!
+		if (!empty($modSettings['messageIconChecks_enable']))
+		{
+			// First icon first... as you'd expect.
+			if (!isset($context['icon_sources'][$row['first_icon']]))
+				$context['icon_sources'][$row['first_icon']] = file_exists($settings['theme_dir'] . '/images/post/' . $row['first_icon'] . '.png') ? 'images_url' : 'default_images_url';
+		}
+		else
+		{
+			if (!isset($context['icon_sources'][$row['first_icon']]))
+				$context['icon_sources'][$row['first_icon']] = 'images_url';
+		}
+
 		$context['topics'][] = array(
 			'id' => $row['id_topic'],
 			'first_icon' => $row['first_icon'],
