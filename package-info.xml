@@ -7,6 +7,18 @@
 	<type>modification</type>
 
 	<install for="2.1 - 2.1.99">
+		<code type="inline"><![CDATA[<?php
+define('REQUIRED_PHP_VERSION', '7.1');
+if (version_compare(PHP_VERSION, REQUIRED_PHP_VERSION, '<'))
+	fatal_error(
+		sprintf(
+			'This mod requires a minimum of PHP %s in order to function. (You are currently running PHP %s)',
+			REQUIRED_PHP_VERSION,
+			PHP_VERSION
+		),
+		false
+	);
+?>]]></code>
 		<require-file name="Subs-RecentTopics.php" destination="$sourcedir" />
 		<require-file name="RecentTopics.php" destination="$sourcedir" />
 		<require-file name="RecentTopics.template.php" destination="$themedir" />
