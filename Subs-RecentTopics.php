@@ -5,7 +5,7 @@
  * Called by:
  *        integrate_actions
  */
-function recent_top_action(&$actionArray)
+function recent_top_action(array &$actionArray): void
 {
 	$actionArray['recenttopics'] = ['RecentTopics.php', 'recent_topMain'];
 }
@@ -15,7 +15,7 @@ function recent_top_action(&$actionArray)
  * Called by:
  *        integrate_menu_buttons
  */
-function recent_top__menu_button(&$buttons)
+function recent_top__menu_button(array &$buttons): void
 {
 	global $scripturl, $modSettings, $txt;
 	loadLanguage('RecentTopics');
@@ -51,7 +51,7 @@ function recent_top__menu_button(&$buttons)
  * Called by:
  *        integrate_general_mod_settings
  */
-function recent_top_settings(&$config_vars)
+function recent_top_settings(array &$config_vars): void
 {
 	global $txt;
 	loadLanguage('RecentTopics');
