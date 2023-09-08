@@ -6,6 +6,7 @@ if (!defined('SMF'))
 function recent_topMain()
 {
 	global $context, $scripturl, $txt, $smcFunc;
+	loadLanguage('RecentTopics');
 
 	if(!isset($_REQUEST['xml'])){
 	
