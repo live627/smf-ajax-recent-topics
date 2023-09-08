@@ -6,9 +6,9 @@ elseif (!defined('SMF'))
 	die('<b>Error:</b> Cannot install - please verify you put this in the same place as SMF\'s index.php.');
 
 updateSettings(array(
-	'art_number_topics' => '25',
-	'art_refresh_interval' => '10',
-	'art_menubutton' => '1',
+	'recent_topics_number_topics' => '25',
+	'recent_topics_refresh_interval' => '10',
+	'recent_topics_menubutton' => '1',
 ));
 
 if(SMF == 'SSI')

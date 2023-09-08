@@ -9,18 +9,39 @@ function recent_topMain()
 
 	if(!isset($_REQUEST['xml'])){
 	
-		loadTemplate('Recent_top');
-		$context['page_title'] = $txt['art_title'];
-		recent();
+		loadTemplate('RecentTopics');
+		$context['page_title'] = $txt['recent_topics_title'];
+		RecentTopics();
 	}
 	else{
-		recent();
-		require('Recent_top_xml_output.php');
+		RecentTopics();
+	
+	echo '<?xml version="1.0" encoding="', $context['character_set'], '"?>
+<smf>';
+	
+	if (!empty($context['topics']))
+		echo '
+	<lastTime><!', '[CDATA[', $context['last_post_time'], ']', ']></lastTime>';
+	
+	foreach ($context['topics'] as $topic)
+		echo '
+	<topic>
+		<id><!', '[CDATA[', $topic['id'], ']', ']></id>
+		<icon><!', '[CDATA[<div class="board_icon"><img src="', $topic['icon_url'], '" alt=""></div>]', ']></icon>
+		<subject><!', '[CDATA[', str_replace(']'.']>', ']]]'.']><!'.'[CDATA[>', $topic['link'] . '<br>' . $txt['started_by'] . ' ' . $topic['firstPoster']['link']), '  ]', ']></subject>
+		<board><!', '[CDATA[', str_replace(']'.']>', ']]]'.']><!'.'[CDATA[>', $topic['board']['link']), ']', ']></board>
+		<replies><!', '[CDATA[', $topic['replies'], ' ', $txt['replies'], '<br>', $topic['views'], ' ', $txt['views'], ']', ']></replies>
+		<last><!', '[CDATA[', str_replace(']'.']>', ']]]'.']><!'.'[CDATA[>', $topic['lastPoster']['time'] . '<br>' . $txt['by'] . ' ' . $topic['lastPoster']['link']), ']', ']></last>
+		<lastLink><!', '[CDATA[<a href="', $topic['lastPost']['href'], '" class="new_posts">' . $txt['new'] . '</a>]', ']></lastLink>
+	</topic>';
+	
+	echo '
+</smf>';
 		die();
 	}
 }			  
 			  
-function recent(){			  
+function RecentTopics(){			  
 	global $context, $settings, $modSettings, $scripturl, $txt;
 	global $user_info, $modSettings, $smcFunc, $board;
 
@@ -121,14 +142,14 @@ function recent(){
 
 	$context['linktree'][] = array(
 		'url' => $scripturl . '?action=' . $_REQUEST['action'],
-		'name' => $txt['art_title'],
+		'name' => $txt['recent_topics_title'],
 	);
 		
 	$latest_post = !empty($_REQUEST['latest']) ? 'AND m.poster_time > {int:latest}' : '';
 	if (!empty($latest_post))
 		$query_parameters['latest'] = (int) $_REQUEST['latest'];
 	
-	$min_msg_id = $modSettings['maxMsgID'] - (int) (($modSettings['totalMessages'] / $modSettings['totalTopics']) * $modSettings['art_number_topics']);
+	$min_msg_id = $modSettings['maxMsgID'] - (int) (($modSettings['totalMessages'] / $modSettings['totalTopics']) * $modSettings['recent_topics_number_topics']);
 	
 	$context['topics'] = array();
 	$request = $smcFunc['db_query']('', '
@@ -153,7 +174,7 @@ function recent(){
 		array_merge($query_parameters, array(
 			'min_msg_id' => $min_msg_id,
 			'is_approved' => 1,
-			'limit' =>  $modSettings['art_number_topics'],
+			'limit' =>  $modSettings['recent_topics_number_topics'],
 		))
 	);
 
@@ -191,14 +212,14 @@ function recent(){
 			'firstPoster' => array(
 				'id' => $row['id_first_poster'],
 				'name' => $row['firstPoster'],
-				'time' => (time() - $row['firstTime'] < 3600) ? round((time() - $row['firstTime'])/60, 0) . $txt['art_minutes_ago'] : timeformat($row['firstTime']),
+				'time' => (time() - $row['firstTime'] < 3600) ? round((time() - $row['firstTime'])/60, 0) . $txt['recent_topics_minutes_ago'] : timeformat($row['firstTime']),
 				'href' => $scripturl . '?action=profile;u=' . $row['id_first_poster'],
 				'link' => '<a href="' . $scripturl . '?action=profile;u=' . $row['id_first_poster'] . '">' . $row['firstPoster'] . '</a>'
 			),
 			'lastPoster' => array(
 				'id' => $row['id_last_poster'],
 				'name' => $row['lastPoster'],
-				'time' => (time() - $row['lastTime'] < 3600) ? round((time() - $row['lastTime'])/60, 0) . $txt['art_minutes_ago'] : timeformat($row['lastTime']),
+				'time' => (time() - $row['lastTime'] < 3600) ? round((time() - $row['lastTime'])/60, 0) . $txt['recent_topics_minutes_ago'] : timeformat($row['lastTime']),
 				'href' => $scripturl . '?action=profile;u=' . $row['id_last_poster'],
 				'link' => '<a href="' . $scripturl . '?action=profile;u=' . $row['id_last_poster'] . '">' . $row['lastPoster'] . '</a>'
 			),

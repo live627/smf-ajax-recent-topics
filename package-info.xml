@@ -6,31 +6,28 @@
 	<version>2.0</version>
 	<type>modification</type>
 
-	<install for="2.1.*">
-		<require-file name="Subs-recent_top.php" destination="$sourcedir" />
-		<require-file name="Recent_top.php" destination="$sourcedir" />
-		<require-file name="Recent_top_xml_output.php" destination="$sourcedir" />
-		<require-file name="Recent_top.template.php" destination="$themedir" />
-		<require-dir name="languages" destination="$themedir" />
+	<install for="2.1 - 2.1.99">
+		<require-file name="Subs-RecentTopics.php" destination="$sourcedir" />
+		<require-file name="RecentTopics.php" destination="$sourcedir" />
+		<require-file name="RecentTopics.template.php" destination="$themedir" />
+		<require-file name="RecentTopics.english.php" destination="$languagedir" />
+		<require-file name="RecentTopics.dutch.php" destination="$languagedir" />
 		<database>install21.php</database>
-		<hook hook="integrate_actions" function="recent_top_action" file="$sourcedir/Subs-recent_top.php" />
-		<hook hook="integrate_menu_buttons" function="recent_top__menu_button" file="$sourcedir/Subs-recent_top.php" />
-		<hook hook="integrate_general_mod_settings" function="recent_top_settings" file="$sourcedir/Subs-recent_top.php" />
-		<hook hook="integrate_credits" function="recent_top_credits" file="$sourcedir/Subs-recent_top.php" />
-		<redirect url="?action=admin;area=modsettings;sa=general" timeout="5000" />
+		<hook hook="integrate_actions" function="recent_top_action" file="$sourcedir/Subs-RecentTopics.php" />
+		<hook hook="integrate_menu_buttons" function="recent_top__menu_button" file="$sourcedir/Subs-RecentTopics.php" />
+		<hook hook="integrate_general_mod_settings" function="recent_top_settings" file="$sourcedir/Subs-RecentTopics.php" />
+		<redirect url="?action=admin;area=modsettings;sa=recenttopics" />
 	</install>
-	
-	<uninstall for="2.1.*">
-		<remove-file name="$sourcedir/Subs-recent_top.php" />
-		<remove-file name="$sourcedir/Recent_top.php" />
-		<remove-file name="$sourcedir/Recent_top_xml_output.php" />
-		<remove-file name="$themedir/Recent_top.template.php" />
-		<remove-file name="$languagedir/Recent_top.english.php" />
-		<remove-file name="$languagedir/Recent_top.dutch.php" />
-		<hook hook="integrate_actions" function="recent_top_action" file="$sourcedir/Subs-recent_top.php" reverse="true" />
-		<hook hook="integrate_menu_buttons" function="recent_top__menu_button" file="$sourcedir/Subs-recent_top.php" reverse="true" />
-		<hook hook="integrate_general_mod_settings" function="recent_top_settings" file="$sourcedir/Subs-recent_top.php" reverse="true" />
-		<hook hook="integrate_credits" function="recent_top_credits" file="$sourcedir/Subs-recent_top.php" reverse="true" />
+
+	<uninstall for="2.1 - 2.1.99">
+		<remove-file name="$sourcedir/Subs-RecentTopics.php" />
+		<remove-file name="$sourcedir/RecentTopics.php" />
+		<remove-file name="$themedir/RecentTopics.template.php" />
+		<remove-file name="$languagedir/RecentTopics.english.php" />
+		<remove-file name="$languagedir/RecentTopics.dutch.php" />
+		<hook hook="integrate_actions" function="recent_top_action" file="$sourcedir/Subs-RecentTopics.php" reverse="true" />
+		<hook hook="integrate_menu_buttons" function="recent_top__menu_button" file="$sourcedir/Subs-RecentTopics.php" reverse="true" />
+		<hook hook="integrate_general_mod_settings" function="recent_top_settings" file="$sourcedir/Subs-RecentTopics.php" reverse="true" />
 	</uninstall>
 
 	<install for="2.0 - 2.99.99">

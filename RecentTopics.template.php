@@ -6,14 +6,14 @@ global $context, $txt, $modSettings, $scripturl, $settings;
 	echo '
 		<div id="display_head" class="information">
 			<h2 class="display_title">
-				<span>' , $txt['art_title'] , '</span>
+				<span>' , $txt['recent_topics_title'] , '</span>
 			</h2>
 		</div>';
 
 	// No topics.... just say, "sorry bub".
 	if (empty($context['topics']))
 		echo '
-			<div class="infobox"><p class="centertext">', $txt['art_no_recent_topics'], '</p></div>';
+			<div class="infobox"><p class="centertext">', $txt['recent_topics_no_recent_topics'], '</p></div>';
 
 	// Are there actually any topics to show?				
 	else {
@@ -32,7 +32,6 @@ global $context, $txt, $modSettings, $scripturl, $settings;
 					</thead>';
 
 			foreach ($context['topics'] as $topic)
-			{
 				echo '
 					<tr class="windowbg" id="topic_', $topic['id'], '">
 						<td class="hiddensmall" style="padding: 5px 0;"><div class="board_icon"><img src="', $topic['icon_url'], '" alt=""></div></td>
@@ -42,27 +41,25 @@ global $context, $txt, $modSettings, $scripturl, $settings;
 						<td align="center" class="smalltext lefttext">', $topic['lastPoster']['time'], '<br>', $txt['by'] ,' ', $topic['lastPoster']['link'], '</td>
 						<td align="center"><a href="', $topic['lastPost']['href'], '"><i class="main_icons last_post"></i></a></td>
 					</tr>';
-			$alt = !$alt;
-			}
-	
+
 		echo '
 				</table>
 			</div>';
 	}
 	
-	// Now for all of the javascript stuff ', $modSettings['art_refresh_interval'] * 1000, '
+	// Now for all of the javascript stuff ', $modSettings['recent_topics_refresh_interval'] * 1000, '
 	echo '
 		<script language="Javascript" type="text/javascript"><!-- // --><![CDATA[
 			var last_post = ', (!empty($context['last_post_time']) ? $context['last_post_time'] : 0), ';
-			var time_interval = ', $modSettings['art_refresh_interval'] * 1000, ';
-			var max_topics = ', $modSettings['art_number_topics'], ';
+			var time_interval = ', $modSettings['recent_topics_refresh_interval'] * 1000, ';
+			var max_topics = ', $modSettings['recent_topics_number_topics'], ';
 			
 			var interval_id = setInterval( "getTopics()", time_interval);
 
 			function getTopics()
 			{
 				if (window.XMLHttpRequest)
-					getXMLDocument("', $scripturl, '?action=recent_top;latest=" + last_post + ";xml", gotTopics);
+					getXMLDocument("', $scripturl, '?action=recenttopics;latest=" + last_post + ";xml", gotTopics);
 				else
 					clearInterval(interval_id);
 			}
