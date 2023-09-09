@@ -24,6 +24,7 @@ if (version_compare(PHP_VERSION, REQUIRED_PHP_VERSION, '<'))
 		<require-file name="RecentTopics.template.php" destination="$themedir" />
 		<require-file name="RecentTopics.english.php" destination="$languagedir" />
 		<require-file name="RecentTopics.dutch.php" destination="$languagedir" />
+		<require-file name="recenttopics.js" destination="$themedir/scripts" />
 		<database>install21.php</database>
 		<hook hook="integrate_actions" function="recent_top_action" file="$sourcedir/Subs-RecentTopics.php" />
 		<hook hook="integrate_menu_buttons" function="recent_top__menu_button" file="$sourcedir/Subs-RecentTopics.php" />
@@ -37,6 +38,7 @@ if (version_compare(PHP_VERSION, REQUIRED_PHP_VERSION, '<'))
 		<remove-file name="$themedir/RecentTopics.template.php" />
 		<remove-file name="$languagedir/RecentTopics.english.php" />
 		<remove-file name="$languagedir/RecentTopics.dutch.php" />
+		<remove-file name="$themedir/scripts/recenttopics.js" />
 		<hook hook="integrate_actions" function="recent_top_action" file="$sourcedir/Subs-RecentTopics.php" reverse="true" />
 		<hook hook="integrate_menu_buttons" function="recent_top__menu_button" file="$sourcedir/Subs-RecentTopics.php" reverse="true" />
 		<hook hook="integrate_general_mod_settings" function="recent_top_settings" file="$sourcedir/Subs-RecentTopics.php" reverse="true" />
