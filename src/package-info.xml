@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
+<package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
+	<id>AirRideTalk:ajax_recent_topics</id>
+	<name>AJAX Recent Topics</name>
+	<version>2.0</version>
+	<type>modification</type>
+
+	<install for="2.1 - 2.1.99">
+		<code type="inline"><![CDATA[<?php
+define('REQUIRED_PHP_VERSION', '7.1');
+if (version_compare(PHP_VERSION, REQUIRED_PHP_VERSION, '<'))
+	fatal_error(
+		sprintf(
+			'This mod requires a minimum of PHP %s in order to function. (You are currently running PHP %s)',
+			REQUIRED_PHP_VERSION,
+			PHP_VERSION
+		),
+		false
+	);
+?>]]></code>
+		<require-file name="Subs-RecentTopics.php" destination="$sourcedir" />
+		<require-file name="RecentTopics.php" destination="$sourcedir" />
+		<require-file name="RecentTopics.template.php" destination="$themedir" />
+		<require-file name="RecentTopics.english.php" destination="$languagedir" />
+		<require-file name="RecentTopics.dutch.php" destination="$languagedir" />
+		<require-file name="recenttopics.js" destination="$themedir/scripts" />
+		<database>install.php</database>
+		<hook hook="integrate_actions" function="recent_top_actions" file="$sourcedir/Subs-RecentTopics.php" />
+		<hook hook="integrate_menu_buttons" function="recent_top_menu_buttons" file="$sourcedir/Subs-RecentTopics.php" />
+		<hook hook="integrate_general_mod_settings" function="recent_top_general_mod_settings" file="$sourcedir/Subs-RecentTopics.php" />
+		<redirect url="?action=admin;area=modsettings" />
+	</install>
+
+	<uninstall for="2.1 - 2.1.99">
+		<remove-file name="$sourcedir/Subs-RecentTopics.php" />
+		<remove-file name="$sourcedir/RecentTopics.php" />
+		<remove-file name="$themedir/RecentTopics.template.php" />
+		<remove-file name="$languagedir/RecentTopics.english.php" />
+		<remove-file name="$languagedir/RecentTopics.dutch.php" />
+		<remove-file name="$themedir/scripts/recenttopics.js" />
+		<hook hook="integrate_actions" function="recent_top_actions" file="$sourcedir/Subs-RecentTopics.php" reverse="true" />
+		<hook hook="integrate_menu_buttons" function="recent_top_menu_buttons" file="$sourcedir/Subs-RecentTopics.php" reverse="true" />
+		<hook hook="integrate_general_mod_settings" function="recent_top_general_mod_settings" file="$sourcedir/Subs-RecentTopics.php" reverse="true" />
+	</uninstall>
+
+	<install for="2.0 - 2.0.99">
+		<code type="inline"><![CDATA[<?php
+			define('REQUIRED_PHP_VERSION', '7.1.0');
+			if (version_compare(PHP_VERSION, REQUIRED_PHP_VERSION, '<'))
+				fatal_error(
+					sprintf(
+						'This mod requires a minimum of PHP %s in order to function. (You are currently running PHP %s)',
+						REQUIRED_PHP_VERSION,
+						PHP_VERSION
+					),
+					false
+				);
+			add_integration_function('integrate_pre_include', '$sourcedir/Subs-RecentTopics.php');
+			add_integration_function('integrate_actions', 'recent_top_actions');
+			add_integration_function('integrate_menu_buttons', 'recent_top_menu_buttons');
+			add_integration_function('integrate_general_mod_settings', 'recent_top_general_mod_settings');
+		?>]]></code>
+		<database>install.php</database>
+		<require-file name="Subs-RecentTopics.php" destination="$sourcedir" />
+		<require-file name="smf20/RecentTopics.php" destination="$sourcedir" />
+		<require-file name="smf20/RecentTopics.template.php" destination="$themedir" />
+		<require-file name="RecentTopics.english.php" destination="$languagedir" />
+		<require-file name="smf20/recenttopics.js" destination="$themedir/scripts" />
+		<redirect url="?action=admin;area=modsettings" />
+	</install>
+
+	<uninstall for="2.0 - 2.0.99">
+		<code type="inline"><![CDATA[<?php
+			remove_integration_function('integrate_pre_include', '$sourcedir/Subs-RecentTopics.php');
+			remove_integration_function('integrate_actions', 'recent_top_actions');
+			remove_integration_function('integrate_menu_buttons', 'recent_top_menu_buttons');
+			remove_integration_function('integrate_general_mod_settings', 'recent_top_general_mod_settings');
+		?>]]></code>
+		<remove-file name="$sourcedir/Subs-RecentTopics.php" />
+		<remove-file name="$sourcedir/RecentTopics.php" />
+		<remove-file name="$themedir/RecentTopics.template.php" />
+		<remove-file name="$languagedir/RecentTopics.english.php" />
+		<remove-file name="$themedir/scripts/recenttopics.js" />
+	</uninstall>
+
+	<install for="1.1.1 - 1.1.99">
+		<modification>install11.xml</modification>
+		<code>install.php</code>
+	</install>
+
+	<uninstall for="1.1.1 - 1.1.99">
+		<modification type="file" reverse="true">install11.xml</modification>
+	</uninstall>
+</package-info>

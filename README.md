@@ -1,49 +1,26 @@
-# AJAX Recent Topics
+## AJAX Recent Topics
+[![MIT license](http://img.shields.io/badge/license-MIT-009999.svg)](http://opensource.org/licenses/MIT)
+[![Crowdin](https://badges.crowdin.net/custom-form/localized.svg)](https://crowdin.com/project/custom-form)
+[![Latest Version](https://img.shields.io/github/release/live627/smf-ajax-recent-topics.svg)](https://github.com/live627/smf-ajax-recent-topics/releases)
+[![Support](http://img.shields.io/badge/PayPal-$-009966.svg)](https://www.paypal.me/JohnRayes)
 
-This mod adds a Recent Topics list that is updated via AJAX to your board.  It can be found at ?action=recenttopics
+Package name | SMF version | Minimmum PHP version
+--- | --- | ---
+[AJAX Recent Topics 2.2.4](https://github.com/live627/smf-ajax-recent-topics/releases/download/v2.2.4/ajax-recent-topics_2-2-4.tgz) | SMF 2.0.x, SMF 2.1.x | PHP 7.1
+AJAX Recent Topics 1.0.1 | SMF 1.1.x, 2.0 RC2 | PHP 4.3
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/A0A8GEKTO)
+
+[View changelog](https://github.com/live627/smf-ajax-recent-topics/blob/main/CHANGELOG.md)
+
+### Overview
+
+This mod adds a Recent Topics list that is updated via AJAX to your board. It can be found at ?action=recenttopics
+
+- Setup this mod at Administration Center » Configuration » Modifiations.
+- Optional menu button located to the right of Search
+- Control how often to check for new topics.
+   - Defaults to ten (10) seconds.
+   - Too fast of an interval increases the server load.
 
 Developed by live627 and created by SlammedDime.
-
-### Compatibility
-SMF 1.1.x and 2.0.x
-
-## Translations
-These get added to ./Themes/default/languages/Modifications.{language}.php
-
-### Turkish
-```bash
-$txt['recent_topics'] = 'Son Konular';
-$txt['minutes_ago'] = ' Dakika önce';
-$txt['number_recent_topics_interval'] = 'Güncellenmiş konular için kontrol edilicek (saniye cinsinden) bekleme süresi';
-$txt['number_recent_topics_interval_desc'] = '5-10 sn kabul edilebilir,çok düşük değil.';
-$txt['number_recent_topics'] = 'Son konular sayfasın da gösterilicek konu sayısı';
-```
-
-### German
-```bash
-// AJAX Recent Topics
-$txt['recent_topics'] = 'Neueste Themen';
-$txt['minutes_ago'] = ' Minuten her';
-$txt['number_recent_topics_interval'] = 'Zeit (in Sekunden) zwischen Update-Check nach neuen Beiträgen';
-$txt['number_recent_topics_interval_desc'] = 'Nicht zu niedrig wählen, 5-10 Sekunden sind vernünftig';
-$txt['number_recent_topics'] = 'Anzahl der anzuzeigenden Themen auf der Neueste-Themen-Seite';
-```
-
-## Changelog
-```
-Version 1.1 - June 09, 2010, 09:56:07 PM
-* Update for 1.1.11 and 2.0 RC3
-
-Version 1.0.1 - September 18, 2008, 12:59:27 PM
-! Fixed SQL query
-```
-
-## Legal
-
-This work is released under the [Creative Commons Attribution-ShareAlike 3.0 Unported License](http://creativecommons.org/licenses/by-sa/3.0/).
-
-## TODO
-
-* Add a description so when the user is viewing the recent topics, they show up as such in the Who's online list
-* Exclude AJAX calls for new info from hit count
-* Convert template to semantic version

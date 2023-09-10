@@ -15,7 +15,7 @@
 
 	<file name="$sourcedir/Recent.php">
 		<operation>
-			<search position="end" />
+			<search position="end"/>
 			<add><![CDATA[function RecentTopics()
 {
 	global $context, $settings, $scripturl, $txt, $db_prefix;
@@ -24,7 +24,7 @@
 	loadTemplate('Recent');
 	$context['page_title'] = $txt['recent_topics'];
 	$context['sub_template'] = isset($_REQUEST['xml']) ? 'recent_xml' : 'recent';
-	
+
 	if (!empty($_REQUEST['c']) && empty($board))
 	{
 		$_REQUEST['c'] = explode(',', $_REQUEST['c']);
@@ -97,11 +97,11 @@
 		'url' => $scripturl . '?action=' . $_REQUEST['action'],
 		'name' => $txt['recent_topics'],
 	);
-		
+
    $latest_post = !empty($_REQUEST['latest']) ? 'AND m.PosterTime > ' . (int) $_REQUEST['latest'] : '';
-   
+
    $min_msg_id = $modSettings['maxMsgID'] - (int) (($modSettings['totalMessages'] / $modSettings['totalTopics']) * $settings['number_recent_topics']);
-   
+
    $context['topics'] = array();
    // Find all the posts in distinct topics.  Newer ones will have higher IDs.
    $request = db_query("
@@ -121,7 +121,7 @@
          $latest_post
       ORDER BY t.ID_LAST_MSG DESC
       LIMIT " . $settings['number_recent_topics'], __FILE__, __LINE__);
-	  
+
 	while ($row = mysql_fetch_assoc($request))
 	{
 		$context['topics'][] = array(
@@ -160,7 +160,7 @@
 	mysql_free_result($request);
 	if (!empty($context['topics']))
 		$context['last_post_time'] = $context['topics'][0]['lastPost']['time'];
-	
+
 	// If we have an XML request, we need to reverse the array
 	if (!empty($latest_post))
 		$context['topics'] = array_reverse($context['topics']);
@@ -192,7 +192,7 @@
 
 	<file name="$languagedir/Modifications.english.php">
 		<operation>
-			<search position="end" />
+			<search position="end"/>
 			<add><![CDATA[// AJAX Recent Topics
 $txt['recent_topics'] = 'Recent Topics';
 $txt['minutes_ago'] = ' minutes ago';
@@ -206,18 +206,18 @@ $txt['number_recent_topics'] = 'Topics to display on Recent Topic page';
 
 	<file name="$themedir/Recent.template.php">
 		<operation>
-			<search position="end" />
+			<search position="end"/>
 			<add><![CDATA[function template_recent()
 {
 	global $context, $txt, $settings, $scripturl;
-	
+
 	echo '
 	<table width="100%" border="0" cellspacing="0" cellpadding="3">
 		<tr>
 			<td>', theme_linktree(), '</td>
 		</tr>
 	</table>';
-	
+
 	echo '
 		<div class="tborder" ', $context['browser']['needs_size_fix'] && !$context['browser']['is_ie6'] ? 'style="width: 100%;"' : '', '>
 			<table border="0" width="100%" cellspacing="0" cellpadding="4" class="bordercolor" id="topicTable">
@@ -241,7 +241,7 @@ $txt['number_recent_topics'] = 'Topics to display on Recent Topic page';
 
 	echo '
 				</tr>';
-	
+
 	foreach ($context['topics'] as $topic)
 	{
 		echo '
@@ -254,18 +254,18 @@ $txt['number_recent_topics'] = 'Topics to display on Recent Topic page';
 					<td align="center" style="border-bottom: 1px solid rgb(204, 204, 204);"><a href="', $topic['lastPost']['href'], '"><img src="', $settings['images_url'], '/icons/last_post.gif" alt="', $txt[111], '" title="', $txt[111], '" /></a></td>
 				</tr>';
 	}
-	
+
 	echo '
 			</table>
 		</div>';
-	
+
 	// Now for all of the javascript stuff
 	echo '
 		<script language="Javascript" type="text/javascript"><!-- // --><![CDATA[
 			var last_post = ', (!empty($context['last_post_time']) ? $context['last_post_time'] : 0), ';
 			var time_interval = ', $settings['number_recent_topics_interval'] * 1000, ';
 			var max_topics = ', $settings['number_recent_topics'], ';
-			
+
 			var interval_id = setInterval( "getTopics()", time_interval);
 
 			function getTopics()
@@ -275,26 +275,26 @@ $txt['number_recent_topics'] = 'Topics to display on Recent Topic page';
 				else
 					clearInterval(interval_id);
 			}
-			
+
 			function gotTopics(XMLDoc)
 			{
 				var updated_time = XMLDoc.getElementsByTagName("smf")[0].getElementsByTagName("lastTime")[0];
 				var topics = XMLDoc.getElementsByTagName("smf")[0].getElementsByTagName("topic");
 				var topic, id_topic, board, subject, replies, firstPost, lastPost, link;
 				var myTable = document.getElementById("topicTable"), oldRow, myRow, myCell, myData, rowCount;
-				
+
 				// If this exists, we have at least one updated/new topic
 				if (updated_time)
 				{
 					// Update the last post time
 					last_post = updated_time.childNodes[0].nodeValue;
-					
+
 					// No Messages message?  Ditch it!
 					// Note, this should only happen if there are literally zero topics
 					// on the board when a user visits this page.
 					if (document.getElementById("no_topics") != null)
 						myTable.deleteRow(-1);
-					
+
 					// If the topic is already in the list, remove it
 					for (var i = 0; i < topics.length; i++)
 					{
@@ -303,11 +303,11 @@ $txt['number_recent_topics'] = 'Topics to display on Recent Topic page';
 						if ((oldRow = document.getElementById("topic_" + id_topic)) != null)
 							myTable.deleteRow(oldRow.rowIndex);
 					}
-					
+
 					// Are we going to exceed the maximum topic count allowed?
 					while (((myTable.rows.length - 1 + topics.length) - max_topics) > 0)
 						myTable.deleteRow(-1);
-					
+
 					// Now start the insertion
 					for (var i = 0; i < topics.length; i++)
 					{
@@ -320,46 +320,46 @@ $txt['number_recent_topics'] = 'Topics to display on Recent Topic page';
 						firstPost = topic.getElementsByTagName("first")[0].childNodes[0].nodeValue;
 						lastPost = topic.getElementsByTagName("last")[0].childNodes[0].nodeValue;
 						link = topic.getElementsByTagName("lastLink")[0].childNodes[0].nodeValue;
-						
+
 						// Now to create the new row...
 						myRow = myTable.insertRow(1);
 						myRow.id = "topic_" + id_topic;
 						myRow.className = "windowbg";
-						
+
 						// First the Board
 						myCell = myRow.insertCell(-1);
 						myCell.className = "smalltext";
 						myCell.style.paddingLeft = "10px";
 						myCell.style.borderBottom = "1px solid rgb(204, 204, 204)";
 						setInnerHTML(myCell, board);
-						
+
 						// Then subject
 						myCell = myRow.insertCell(-1);
 						myCell.style.paddingLeft = "10px";
 						myCell.style.borderBottom = "1px solid rgb(204, 204, 204)";
 						setInnerHTML(myCell, subject);
-						
+
 						// replies
 						myCell = myRow.insertCell(-1);
 						myCell.className = "smalltext";
 						myCell.align = "center"
 						myCell.style.borderBottom = "1px solid rgb(204, 204, 204)";
 						setInnerHTML(myCell, replies);
-						
+
 						// first post
 						myCell = myRow.insertCell(-1);
 						myCell.className = "smalltext";
 						myCell.align = "center"
 						myCell.style.borderBottom = "1px solid rgb(204, 204, 204)";
 						setInnerHTML(myCell, firstPost);
-						
+
 						// last post
 						myCell = myRow.insertCell(-1);
 						myCell.className = "smalltext";
 						myCell.align = "center"
 						myCell.style.borderBottom = "1px solid rgb(204, 204, 204)";
 						setInnerHTML(myCell, lastPost);
-						
+
 						// last post
 						myCell = myRow.insertCell(-1);
 						myCell.align = "center"
@@ -374,14 +374,14 @@ $txt['number_recent_topics'] = 'Topics to display on Recent Topic page';
 function template_recent_xml()
 {
 	global $context, $settings, $txt;
-	
+
 	echo '<?xml version="1.0" encoding="', $context['character_set'], '"?>
 <smf>';
-	
+
 	if (!empty($context['topics']))
 		echo '
 	<lastTime><!', '[CDATA[', $context['last_post_time'], ']', ']></lastTime>';
-	
+
 	foreach ($context['topics'] as $topic)
 		echo '
 	<topic>
@@ -393,7 +393,7 @@ function template_recent_xml()
 		<last><!', '[CDATA[', str_replace(']'.']>', ']]]'.']><!'.'[CDATA[>', $topic['lastPoster']['link'] . '<br />' . $topic['lastPoster']['time']), ']', ']></last>
 		<lastLink><!', '[CDATA[<a href="', $topic['lastPost']['href'], '"><img src="', $settings['images_url'], '/icons/last_post.gif" alt="', $txt[111], '" title="', $txt[111], '" /></a>]', ']></lastLink>
 	</topic>';
-	
+
 	echo '
 </smf>';
 }
