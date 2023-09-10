@@ -52,7 +52,7 @@ function getTopics(last, delay, max)
 
 				// First the icon
 				myCell = myRow.insertCell(-1);
-				myCell.className = "hiddensmall";
+				myCell.className = "hide_720";
 				myCell.style.padding = "5px 0";
 				setInnerHTML(myCell, icon);
 
@@ -62,12 +62,12 @@ function getTopics(last, delay, max)
 
 				// Then Board
 				myCell = myRow.insertCell(-1);
-				myCell.className = "hiddensmall";
+				myCell.className = "hide_720";
 				setInnerHTML(myCell, board);
 
 				// replies
 				myCell = myRow.insertCell(-1);
-				myCell.className = "smalltext hiddensmall";
+				myCell.className = "smalltext hide_720";
 				myCell.align = "center"
 				setInnerHTML(myCell, replies);
 
