@@ -84,12 +84,4 @@ if (version_compare(PHP_VERSION, REQUIRED_PHP_VERSION, '<'))
 		<remove-file name="$themedir/scripts/recenttopics.js" />
 	</uninstall>
 
-	<install for="1.1.1 - 1.1.99">
-		<modification>install11.xml</modification>
-		<code>install.php</code>
-	</install>
-
-	<uninstall for="1.1.1 - 1.1.99">
-		<modification type="file" reverse="true">install11.xml</modification>
-	</uninstall>
 </package-info>
