@@ -6,7 +6,7 @@
 
 Package name | SMF version | Minimmum PHP version
 --- | --- | ---
-[AJAX Recent Topics 2.0.0](https://github.com/live627/smf-ajax-recent-topics/releases/download/v2.0.0/ajax-recent-topics_2-0-0.tgz) | SMF 2.0.x, SMF 2.1.x | PHP 7.1
+[AJAX Recent Topics 3.0.0](https://github.com/live627/smf-ajax-recent-topics/releases/download/v3.0.0/ajax-recent-topics_3-0-0.tgz) | SMF 2.0.x, SMF 2.1.x | PHP 7.1
 AJAX Recent Topics 1.0.1 | SMF 1.1.x, 2.0 RC2 | PHP 4.3
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/A0A8GEKTO)
