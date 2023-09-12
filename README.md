@@ -11,7 +11,7 @@ AJAX Recent Topics 1.0.1 | SMF 1.1.x, 2.0 RC2 | PHP 4.3
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/A0A8GEKTO)
 
-[View changelog](https://github.com/live627/smf-ajax-recent-topics/blob/main/CHANGELOG.md)
+[View changelog](https://github.com/live627/smf-ajax-recent-topics/blob/master/CHANGELOG.md)
 
 ### Overview
 
