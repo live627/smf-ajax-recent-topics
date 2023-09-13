@@ -1,5 +1,33 @@
 # Changelog
 
+## [3.0.0](https://github.com/live627/smf-ajax-recent-topics/compare/v2.0.1...v3.0.0) (2023-09-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop support for SMF 1.1.x
+* Require PHP >= 7.1
+
+### Features
+
+* Add support for SMF2.1 ([#1](https://github.com/live627/smf-ajax-recent-topics/issues/1)) ([b11a7c2](https://github.com/live627/smf-ajax-recent-topics/commit/b11a7c229a40a07d7771d9c3fb53ca8d4d4660ca))
+
+
+### Bug Fixes
+
+* Template mixup ([315e27a](https://github.com/live627/smf-ajax-recent-topics/commit/315e27a3600cf0972c04655c954b43c4f0fc577e))
+
+
+### Miscellaneous Chores
+
+* **master:** release 2.0.0 ([#5](https://github.com/live627/smf-ajax-recent-topics/issues/5)) ([f117a6a](https://github.com/live627/smf-ajax-recent-topics/commit/f117a6ab815325fb821fd1c92ccc3c57d3ea90c1))
+* **master:** release 2.0.1 ([#8](https://github.com/live627/smf-ajax-recent-topics/issues/8)) ([c778314](https://github.com/live627/smf-ajax-recent-topics/commit/c77831403a047d6589c2137e3ebabbe8f41e4ab2))
+
+
+### Code Refactoring
+
+* drop support for SMF 1.1.x ([1149b7c](https://github.com/live627/smf-ajax-recent-topics/commit/1149b7c21d19fb4c0e3b98e184458e3fbf04e8b0))
+
 ## [2.0.1](https://github.com/live627/smf-ajax-recent-topics/compare/v2.0.0...v2.0.1) (2023-09-13)
 
 
