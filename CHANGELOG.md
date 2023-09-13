@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/live627/smf-ajax-recent-topics/compare/v2.0.0...v2.0.1) (2023-09-13)
+
+
+### Bug Fixes
+
+* Template mixup ([315e27a](https://github.com/live627/smf-ajax-recent-topics/commit/315e27a3600cf0972c04655c954b43c4f0fc577e))
+
 ## [2.0.0](https://github.com/live627/ajax_recent_topics/compare/v1.0.1...v2.0.0) (2023-09-12)
 
 
