@@ -2,16 +2,62 @@
 
 function recent_topMain(): void
 {
-	global $context, $modSettings, $scripturl, $txt;
-	global $user_info, $modSettings, $smcFunc, $board;
-
+	global $context, $txt;
 	loadLanguage('RecentTopics');
-	loadTemplate('RecentTopics');
-	if (!isset($_REQUEST['xml']))
-		$context['page_title'] = $txt['recent_topics_title'];
-	$context['sub_template'] = isset($_REQUEST['xml']) ? 'recent_xml' : 'recent';
 
-	$query_parameters = array();
+	if (!isset($_REQUEST['xml']))
+	{
+		loadTemplate('RecentTopics');
+		$context['page_title'] = $txt['recent_topics_title'];
+		RecentTopics();
+	}
+	else
+	{
+		RecentTopics();
+
+		echo '<?xml version="1.0" encoding="', $context['character_set'], '"?>
+<smf>';
+
+		if (!empty($context['topics']))
+			echo '
+	<lastTime><!', '[CDATA[', $context['last_post_time'], ']', ']></lastTime>';
+
+		foreach ($context['topics'] as $topic)
+			echo '
+	<topic>
+		<id><!', '[CDATA[', $topic['id'], ']', ']></id>
+		<icon><!', '[CDATA[<div class="board_icon"><img src="', $topic['icon_url'], '" alt=""></div>]', ']></icon>
+		<subject><!', '[CDATA[', str_replace(
+				']' . ']>',
+				']]]' . ']><!' . '[CDATA[>',
+				$topic['link'] . '<br>' . $txt['started_by'] . ' ' . $topic['firstPoster']['link']
+			), '  ]', ']></subject>
+		<board><!', '[CDATA[', str_replace(']' . ']>', ']]]' . ']><!' . '[CDATA[>', $topic['board']['link']), ']', ']></board>
+		<replies><!', '[CDATA[', $topic['replies'], ' ', $txt['replies'], '<br>', $topic['views'], ' ', $txt['views'], ']', ']></replies>
+		<last><!', '[CDATA[', str_replace(
+				']' . ']>',
+				']]]' . ']><!' . '[CDATA[>',
+				$topic['lastPoster']['time'] . '<br>' . $txt['by'] . ' ' . $topic['lastPoster']['link']
+			), ']', ']></last>
+		<lastLink><!', '[CDATA[<a href="', $topic['lastPost']['href'], '" class="new_posts">' . $txt['new'] . '</a>]', ']></lastLink>
+	</topic>';
+
+		echo '
+</smf>';
+		die();
+	}
+}
+
+function RecentTopics(): void
+{
+	global $context, $settings, $modSettings, $scripturl, $txt, $smcFunc, $board;
+
+	// Setup the default topic icons...
+	$context['icon_sources'] = [];
+	foreach ($context['stable_icons'] as $icon)
+		$context['icon_sources'][$icon] = 'images_url';
+
+	$query_parameters = [];
 	if (!empty($_REQUEST['c']) && empty($board))
 	{
 		$_REQUEST['c'] = explode(',', $_REQUEST['c']);
@@ -141,38 +187,52 @@ function recent_topMain(): void
 
 	while ($row = $smcFunc['db_fetch_assoc']($request))
 	{
-		$context['topics'][] = array(
+		if (!empty($modSettings['messageIconChecks_enable']))
+		{
+			if (!isset($context['icon_sources'][$row['first_icon']]))
+				$context['icon_sources'][$row['first_icon']] = file_exists($settings['theme_dir'] . '/images/post/' . $row['first_icon'] . '.png') ? 'images_url' : 'default_images_url';
+		}
+		else
+		{
+			if (!isset($context['icon_sources'][$row['first_icon']]))
+				$context['icon_sources'][$row['first_icon']] = 'images_url';
+		}
+
+		$context['topics'][] = [
 			'id' => $row['id_topic'],
+			'first_icon' => $row['first_icon'],
+			'icon_url' => $settings[$context['icon_sources'][$row['first_icon']]] . '/post/' . $row['first_icon'] . '.png',
 			'subject' => $row['subject'],
 			'href' => $scripturl . '?topic=' . $row['id_topic'] . '.0',
 			'link' => '<a href="' . $scripturl . '?topic=' . $row['id_topic'] . '.0">' . $row['subject'] . '</a>',
-			'replies' => $row['num_replies'],
-			'board' => array(
+			'replies' => comma_format($row['num_replies']),
+			'views' => comma_format($row['num_views']),
+			'board' => [
 				'id' => $row['id_board'],
 				'name' => $row['bName'],
 				'href' => $scripturl . '?board=' . $row['id_board'] . '.0',
-				'link' => '<a href="' . $scripturl . '?board=' . $row['id_board'] . '.0">' . $row['bName'] . '</a>'
-			),
-			'firstPoster' => array(
+				'link' => '<a href="' . $scripturl . '?board=' . $row['id_board'] . '.0">' . $row['bName'] . '</a>',
+			],
+			'firstPoster' => [
 				'id' => $row['id_first_poster'],
 				'name' => $row['firstPoster'],
-				'time' => (time() - $row['firstTime'] < 3600) ? round((time() - $row['firstTime'])/60, 0) . $txt['minutes_ago'] : timeformat($row['firstTime']),
+				'time' => (time() - $row['firstTime'] < 3600) ? round((time() - $row['firstTime'])/60, 0) . $txt['recent_topics_minutes_ago'] : timeformat($row['firstTime']),
 				'href' => $scripturl . '?action=profile;u=' . $row['id_first_poster'],
-				'link' => '<a href="' . $scripturl . '?action=profile;u=' . $row['id_first_poster'] . '">' . $row['firstPoster'] . '</a>'
-			),
-			'lastPoster' => array(
+				'link' => '<a href="' . $scripturl . '?action=profile;u=' . $row['id_first_poster'] . '">' . $row['firstPoster'] . '</a>',
+			],
+			'lastPoster' => [
 				'id' => $row['id_last_poster'],
 				'name' => $row['lastPoster'],
-				'time' => (time() - $row['lastTime'] < 3600) ? round((time() - $row['lastTime'])/60, 0) . $txt['minutes_ago'] : timeformat($row['lastTime']),
+				'time' => (time() - $row['lastTime'] < 3600) ? round((time() - $row['lastTime'])/60, 0) . $txt['recent_topics_minutes_ago'] : timeformat($row['lastTime']),
 				'href' => $scripturl . '?action=profile;u=' . $row['id_last_poster'],
-				'link' => '<a href="' . $scripturl . '?action=profile;u=' . $row['id_last_poster'] . '">' . $row['lastPoster'] . '</a>'
-			),
-			'lastPost' => array(
+				'link' => '<a href="' . $scripturl . '?action=profile;u=' . $row['id_last_poster'] . '">' . $row['lastPoster'] . '</a>',
+			],
+			'lastPost' => [
 				'time' => $row['lastTime'],
 				'href' => $scripturl . '?topic=' . $row['id_topic'] . '.new;topicseen#new',
-				'link' => '<a href="' . $scripturl . '?topic=' . $row['id_topic'] . '.new;topicseen#new">' . $row['subject'] . '</a>'
-			),
-		);
+				'link' => '<a href="' . $scripturl . '?topic=' . $row['id_topic'] . '.new;topicseen#new">' . $row['subject'] . '</a>',
+			],
+		];
 	}
 	$smcFunc['db_free_result']($request);
 	if (!empty($context['topics']))

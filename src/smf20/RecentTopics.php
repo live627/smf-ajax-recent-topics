@@ -5,8 +5,10 @@ function recent_topMain(): void
 	global $context, $modSettings, $scripturl, $txt;
 	global $user_info, $modSettings, $smcFunc, $board;
 
-	loadTemplate('Recent');
-	$context['page_title'] = $txt['recent_topics'];
+	loadLanguage('RecentTopics');
+	loadTemplate('RecentTopics');
+	if (!isset($_REQUEST['xml']))
+		$context['page_title'] = $txt['recent_topics_title'];
 	$context['sub_template'] = isset($_REQUEST['xml']) ? 'recent_xml' : 'recent';
 
 	$query_parameters = array();
@@ -154,14 +156,14 @@ function recent_topMain(): void
 			'firstPoster' => array(
 				'id' => $row['id_first_poster'],
 				'name' => $row['firstPoster'],
-				'time' => (time() - $row['firstTime'] < 3600) ? round((time() - $row['firstTime'])/60, 0) . $txt['minutes_ago'] : timeformat($row['firstTime']),
+				'time' => (time() - $row['firstTime'] < 3600) ? round((time() - $row['firstTime'])/60, 0) . $txt['recent_topics_minutes_ago'] : timeformat($row['firstTime']),
 				'href' => $scripturl . '?action=profile;u=' . $row['id_first_poster'],
 				'link' => '<a href="' . $scripturl . '?action=profile;u=' . $row['id_first_poster'] . '">' . $row['firstPoster'] . '</a>'
 			),
 			'lastPoster' => array(
 				'id' => $row['id_last_poster'],
 				'name' => $row['lastPoster'],
-				'time' => (time() - $row['lastTime'] < 3600) ? round((time() - $row['lastTime'])/60, 0) . $txt['minutes_ago'] : timeformat($row['lastTime']),
+				'time' => (time() - $row['lastTime'] < 3600) ? round((time() - $row['lastTime'])/60, 0) . $txt['recent_topics_minutes_ago'] : timeformat($row['lastTime']),
 				'href' => $scripturl . '?action=profile;u=' . $row['id_last_poster'],
 				'link' => '<a href="' . $scripturl . '?action=profile;u=' . $row['id_last_poster'] . '">' . $row['lastPoster'] . '</a>'
 			),
